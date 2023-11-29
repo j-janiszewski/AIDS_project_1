@@ -1,0 +1,27 @@
+version: '3.8'
+services:
+  front:
+    build: ./frontend
+    restart: on-failure
+    container_name: front
+    ports:
+      - '3000:3000'
+  mongodb:
+    image: mongo
+    ports:
+      - '27017:27017'
+    volumes:
+      - mongodb:/data/db
+  backend:
+    depends_on:
+      - mongodb
+    build: ./backend
+    restart: unless-stopped
+    ports:
+      - '80:80'
+    volumes:
+      - backend:/backend/logs
+volumes:
+ mongodb:
+ backend:
+    

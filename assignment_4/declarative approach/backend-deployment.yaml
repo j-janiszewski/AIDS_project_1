@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-dep-declarative
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: backend-declarative
+      tier: backend
+  template:
+    metadata:
+      labels:
+        app: backend-declarative
+        tier: backend
+    spec:
+      containers:
+      - name: backend-image
+        image: jjaniszewski/backend_aids_proj
+       

@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-dep-declarative
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: backend-declarative
+      tier: backend
+  template:
+    metadata:
+      labels:
+        app: backend-declarative
+        tier: backend
+    spec:
+      containers:
+      - name: backend-image
+        volumeMounts:
+          - mountPath: /backend/logs
+            name: be-data
+        image: jjaniszewski/backend-aids-projv2
+        env:
+          - name: DB_SERVICE
+            value: "db-service-declarative.default"
+      volumes:
+        - name: be-data
+          persistentVolumeClaim:
+            claimName: mo-backend-pvc
+       

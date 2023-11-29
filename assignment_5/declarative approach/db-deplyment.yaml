@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: db-dep-declarative
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: db-declarative
+      tier: db
+  template:
+    metadata:
+      labels:
+        app: db-declarative
+        tier: db
+    spec:
+      containers:
+      - name: mongodb
+        volumeMounts:
+          - mountPath: /data/db
+            name: mo-data
+        image: mongo
+      volumes:
+      - name: mo-data
+        persistentVolumeClaim:
+          claimName: mo-data-pvc
+      restartPolicy: Always
+       

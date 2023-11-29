@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend-dep-declarative
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: frontend-declarative
+      tier: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend-declarative
+        tier: frontend
+    spec:
+      containers:
+      - name: frontend-image
+        image: jjaniszewski/frontend-aids-projv2
+        env:
+          - name: BACKEND_SERVICE
+            value: "backend-service-declarative.default"
+       
